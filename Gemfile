@@ -48,3 +48,5 @@ end
 
 gem 'jsonapi-rails'
 
+gem 'jwt'
+
