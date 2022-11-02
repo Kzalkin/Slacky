@@ -13,7 +13,7 @@ class Api::V1::AuthenticationController < ApplicationController
     def sign_in
         @user = User.find_by(email: params[:email])
         if @user&.authenticate(params[:password])
-            time = Time.now + 24.hours.to_i
+            time = Time.now + 1.hours.to_i
             token = JsonWebToken.encode(user_id: @user.id, exp: time)
             render json: {token: token, exp: time.to_i, uid: @user.id}, status: :ok
         else
