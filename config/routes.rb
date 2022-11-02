@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       resources :users, only: %i[index show update create destroy]
 
       post 'auth', to: 'authentication#registration'
+      post 'auth/sign_in', to: 'authentication#sign_in'
     end
   end
 end
