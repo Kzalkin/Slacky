@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users, only: %i[index show update create destroy]
+      resources :channels, only: %i[index]
 
       post 'auth', to: 'authentication#registration'
       post 'auth/sign_in', to: 'authentication#sign_in'
