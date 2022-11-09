@@ -20,6 +20,12 @@ class Api::V1::ChannelsController < ApplicationController
         end
     end
 
+    def show
+        @channel = Channel.find(params[:id])
+
+        render jsonapi: @channel, include: [:users]
+    end
+
     private
 
     def channel_params
