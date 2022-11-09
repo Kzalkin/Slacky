@@ -26,6 +26,13 @@ class Api::V1::ChannelsController < ApplicationController
         render jsonapi: @channel, include: [:users]
     end
 
+    def destroy
+        @channel = Channel.find(params[:id])
+        @channel.destroy
+
+        render json: {status: "Success", message: "Channel successfuly destroyed"}, status: :ok
+    end
+
     private
 
     def channel_params
