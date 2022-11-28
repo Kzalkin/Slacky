@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: %i[index show update create destroy]
       resources :channels, only: %i[index create show destroy]
+      resources :messages, only: %i[index create]
 
       post 'auth', to: 'authentication#registration'
       post 'auth/sign_in', to: 'authentication#sign_in'
