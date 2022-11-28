@@ -2,5 +2,6 @@ class Channel < ApplicationRecord
     validates :name, presence: true
 
     has_many :messages
-    has_many :members, through: :messages, source: :user
+    has_many :membership
+    has_many :members, through: :membership, source: :user
 end
