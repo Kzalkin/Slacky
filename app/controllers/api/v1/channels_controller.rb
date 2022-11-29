@@ -40,12 +40,12 @@ class Api::V1::ChannelsController < ApplicationController
     end
 
     def create_channel_with_members
-        Userschannel.create!(channel_id: @channel.id, user_id: request.headers['uid'])
+        Membership.create!(channel_id: @channel.id, user_id: request.headers['uid'])
         return unless channel_params[:user_ids]
         member_ids = channel_params[:user_ids].scan(/\d|\d\d/).map(&:to_i)
 
         member_ids.each do |id|
-            Userschannel.create!(channel_id: @channel.id, user_id: id)
+            Membership.create!(channel_id: @channel.id, user_id: id)
         end
     end
 end
