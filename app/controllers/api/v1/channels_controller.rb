@@ -2,10 +2,9 @@ class Api::V1::ChannelsController < ApplicationController
     before_action :authorize_request
 
     def index
-        uid = request.headers['uid']
-        @user = User.find(uid)
+        @user = current_user
 
-        render jsonapi: @user.channels, include: [:users]
+        render jsonapi: @user.channels, include: [:members]
     end
 
     def create
@@ -40,7 +39,7 @@ class Api::V1::ChannelsController < ApplicationController
     end
 
     def create_channel_with_members
-        Membership.create!(channel_id: @channel.id, user_id: request.headers['uid'])
+        Membership.create!(channel_id: @channel.id, user_id: current_user.id)
         return unless channel_params[:user_ids]
         member_ids = channel_params[:user_ids].scan(/\d|\d\d/).map(&:to_i)
 

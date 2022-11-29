@@ -20,4 +20,10 @@ class ApplicationController < ActionController::API
             render json: {errors: e.message }, status: :unauthorized
         end
     end
+
+    def current_user
+        if request.headers['uid']
+            @current_user = User.find(request.headers['uid'])
+        end
+    end
 end
