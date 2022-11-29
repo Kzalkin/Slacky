@@ -5,4 +5,3 @@ class Channel < ApplicationRecord
     has_many :membership, dependent: :destroy
     has_many :members, through: :membership, source: :user
 end
-q
