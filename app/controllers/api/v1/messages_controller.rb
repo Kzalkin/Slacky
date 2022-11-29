@@ -5,9 +5,13 @@ class Api::V1::MessagesController < ApplicationController
         @channel = params[:receiver_class].constantize.find(params[:receiver_id])
         @user = @channel.members.find(request.headers['uid'])
 
-        @message = @user.messages.create!(body: message_params[:body], channel_id: @channel.id)
+        @message = @user.messages.new(body: message_params[:body], channel_id: @channel.id)
 
-        render jsonapi: @message, include: [:user, :channel]
+        if @message.save
+            render jsonapi: @message, include: [:user, :channel]
+        else
+            render jsonapi_errors: @message.errors
+        end
     end
 
     private
