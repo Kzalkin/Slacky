@@ -1,6 +1,12 @@
 class Api::V1::MessagesController < ApplicationController
-    before_action -> {check_params("receiver_class", "receiver_id")}, only: :create
-    before_action :set_channel, only: :create
+    before_action -> {check_params("receiver_class", "receiver_id")}, only: %i[create]
+    before_action :set_channel, only: %i[index create]
+
+    def index
+        @messages = @channel.messages
+
+        render jsonapi: @messages
+    end
 
     def create
         @message = current_user.messages.new(body: message_params[:body], channel_id: @channel.id)
