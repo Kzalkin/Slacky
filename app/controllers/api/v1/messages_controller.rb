@@ -35,8 +35,10 @@ class Api::V1::MessagesController < ApplicationController
             @user = User.find(params[:receiver_id])
             @name = create_name(current_user, @user)
             @channel = Channel.find_by(name: @name) || Channel.create_private_room([@user, current_user], @name)
+        elsif params[:receiver_class] == "Channel"
+            @channel = Channel.find(params[:receiver_id]) if params[:receiver_class] == "Channel"
         else
-            @channel = params[:receiver_class].constantize.find(params[:receiver_id]) if params[:receiver_class] == "Channel"
+            render json: {status: "Error", error: "Receiver class is invalid"}, status: :unprocessable_entity
         end
     end
 end
