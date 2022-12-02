@@ -6,4 +6,10 @@ class Api::V1::UsersController < ApplicationController
         render jsonapi: @users
     end
 
+    def show
+        @user = User.find(params[:id])
+
+        render jsonapi: @user
+    end
+
 end
